@@ -1,10 +1,10 @@
-# ultimate-noise-box
-Turn a Raspberry Pi 3 into the ultimate noise and relaxation machine.
+# balena-sequencer
+Turn a Raspberry Pi 3 into a simple balena-based musical electronic music instrument
 
-This is still a work in progress! You can learn more in the ongoing [build log](https://forums.balena.io/t/the-ultimate-diy-noise-machine/344407)
+This is still a work in progress!
 
 ## Overview
-Here are the features of the noise machine:
+Here are the features of the sequencer:
 - Produces CD-quality stereophonic audio.
 - Usees real audio samples with gapless undetectable looping
 - A high quality built-in amplifier and speaker system and/or line level audio output

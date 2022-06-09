@@ -9,24 +9,6 @@ services:
     privileged: true
     ports:
       - 4317:4317
-  noise:
-    restart: always
-    build: ./noise
-    privileged: true
-    volumes:
-      - 'shared-data:/data/my_data'
-    ports:
-      - "8080:8080"
-    environment:
-      PULSE_SERVER: tcp:audio:4317
-  utility:
-    build: ./utility
-    restart: always
-    privileged: true
-    volumes:
-      - 'shared-data:/data/my_data'
-    ports:
-      - "8088:8088"
   minio:
     image: minio/minio:RELEASE.2021-06-17T00-10-46Z
     volumes:
@@ -38,18 +20,6 @@ services:
       MINIO_SECRET_KEY: myminio123
       MINIO_REGION_NAME: myregion
     command: minio server /data1
-  redis:
-    image: redis:6.2.4-alpine
-    command: ["redis-server", "--appendonly", "yes"]
-    volumes:
-      - redis-data:/data
-  webserver:
-    restart: always
-    build: ./webserver
-    ports:
-      - 80:80
-    volumes:
-      - 'shared-data:/data/my_data'
   controller:
     restart: always
     privileged: true

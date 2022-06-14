@@ -1,42 +1,50 @@
 # balena-sequencer
 Turn a Raspberry Pi 3 into a simple balena-based musical electronic music instrument
 
-This is still a work in progress!
+![sequencer](https://raw.githubusercontent.com/teotsiv/balena-sequencer/main/photos/box-version.png)
 
 ## Overview
 Here are the features of the sequencer:
 - Produces CD-quality stereophonic audio.
 - Usees real audio samples with gapless undetectable looping
-- A high quality built-in amplifier and speaker system and/or line level audio output
-- Intuitive control panel with rotary wheel and LCD screen
-- Web-based control with a responsive UI for any client
+- line level audio output
+- four sample buttons and dedicated record and loop buttons
+- OLED display
 
-![initial plan](https://raw.githubusercontent.com/alanb128/ultimate-noise-box/main/initial_plan-50.jpeg)
+## Building the sequencer
 
-## Containers
+The sequencer uses two rotary encoders, six LED momentary switched, an OLED display and a Raspberry Pi 3 B+. Full parts list below. Here is the schematic for wiring it up:
 
-### Noise
-This is the Python program that plays back the audio files through the audio block. It uses Pygame to achieve gapless looping playback. The audio files must be in uncompressed PCM wav file format. It exposes an API (using FlaskAPI) 
-- `GET /` returns the current status (`status`) and currently playing file (`file`) and a list of valid API calls.
-- `POST /play/<noisename>/` immediately starts looping playback of specified noise, and returns the current status (`status`) and currently playing file (`file`)
-- `POST /stop/` immediately stops any file playback, and returns the current status (`status`)
+![schematic](https://raw.githubusercontent.com/teotsiv/balena-sequencer/main/photos/schematic.png)
 
-Note `<noisename>` and returned file are the name of the noise, with no path or extension, and underscore (_) instead of spaces.
+The fully wired unit in a plastic box:
 
-### Webserver
-This is a Node/Express webserver that generates a single page for stopping or starting a noise from the library or presets. It is alos currently the only place you can assign presets to noises. The four presets mirror the four physical buttons on the hardware control panel. This application uses XMLHttpRequest to communicate with the backend for stopping, starting and assigning presets. It is set to run on port 80 by default and will be displayed if you enable the device's [public URL](https://www.balena.io/docs/learn/develop/runtime/#public-device-urls).
+![schematic](https://raw.githubusercontent.com/teotsiv/balena-sequencer/main/photos/insides.png)
 
-### [Redis](https://redis.io/)
-An in-memory data structure store. It can periodically write to the local storage as well. This is used to store and retreive the values of the preset buttons, last volume level and most recently played file.
+You can use any enclosure and be creative! Here is one in a plastic cookie "tin":
+
+![schematic](https://raw.githubusercontent.com/teotsiv/balena-sequencer/main/photos/cookie-version.png)
+
+
+### Parts list
+
+TBD
+
+## How it works
+
+We use the balena platform to run containers on the device. Each container provides separate functionality.
 
 ### [Minio](https://min.io/)
-S3 compatible object storage. This provides a web interface for uploading new audio files and their associated jpegs to the device. To access the interface, browse to the local URL using port 9000. To change the username and password, set new values in the `docker-compose.yml` file before first use! (You'll need to clone this repo and push using the CLI in order to do this.)
+S3 compatible object storage. This provides a web interface for uploading new audio files and their associated jpegs to the device. To access the interface, browse to the local URL using port 9000. To change the username and password, set new values in the `docker-compose.yml` file before first use! (You'll need to clone this repo and push using the CLI in order to do this.) The sound files should be named sound1.wav - sound4.wav and correspond to the preset buttons.
+
+### Webserver
+This is a Node/Express webserver that generates a single page for stopping or starting loop playback. It is set to run on port 80 by default and will be displayed if you enable the device's [public URL](https://www.balena.io/docs/learn/develop/runtime/#public-device-urls). (coming soon!)
 
 ### Audio
 This is our beloved [audio block](https://github.com/balenablocks/audio) that runs a PulseAudio server optimized for balenaOS and is the core of [balenaSound](https://sound.balenalabs.io/). We use it here to take care of setting up and routing all audio needs on the Pi hardware, so the noise container just sends its audio here.
 
-### Controller (coming soon)
-A custom Python program that responds to button presses on the control panel, reads the rotary dial position and drives the LCD display.
+### Controller
+A custom Python program that responds to button presses on the control panel, reads the rotary dial position, plays/records the loops, and drives the OLED display.
 
 ## How to use
 (coming soon)

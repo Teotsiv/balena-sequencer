@@ -5,7 +5,8 @@ volumes:
     web-data:
 services:
   audio:
-    image: balenablocks/audio
+    #image: bh.cr/balenablocks/audio-aarch64
+    build: audio
     privileged: true
     ports:
       - 4317:4317
@@ -28,3 +29,5 @@ services:
       - 'shared-data:/data/my_data'
     labels:
       io.balena.features.supervisor-api: '1'
+    environment:
+      PULSE_SERVER: tcp:audio:4317

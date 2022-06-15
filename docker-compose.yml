@@ -5,8 +5,7 @@ volumes:
     web-data:
 services:
   audio:
-    #image: bh.cr/balenablocks/audio-aarch64
-    build: audio
+    image: bh.cr/balenablocks/audio-aarch64
     privileged: true
     ports:
       - 4317:4317

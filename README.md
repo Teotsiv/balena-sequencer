@@ -38,9 +38,23 @@ You can use any enclosure and be creative! Here is one in a plastic cookie "tin"
 
 ![schematic](https://raw.githubusercontent.com/teotsiv/balena-sequencer/main/photos/cookie-version.png)
 
+### Software setup
+
+Running this project is as simple as deploying it to a fleet.
+
+One-click deploy to balenaCloud:
+
+[![balena deploy button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/Teotsiv/balena-sequencer)
+
+or
+
+Sign up at [balena.io](www.balena.io) and follow our [Getting Started Guide](https://www.balena.io/docs/learn/getting-started/raspberrypi3/python/).
+- Clone this repository to your local workspace.
+- Using the [Balena CLI](https://www.balena.io/docs/reference/balena-cli/), push the code with `balena push <fleet-name>`.
+
 ## How it works
 
-We use the [balena platform]( to run containers on the device. Each container provides separate functionality.
+We use the [balena platform](www.balena.io) to run containers on the device. Each container provides separate functionality:
 
 ### [Minio](https://min.io/)
 S3 compatible object storage. This provides a web interface for uploading new audio files to the device. To access the interface, browse to the local URL using port 9000. To change the username and password, set new values in the `docker-compose.yml` file before first use! (You'll need to clone this repo and push using the CLI in order to do this.) The sound files should be named sound1.wav, sound2.wav, sound3.wav sound4.wav which correspond to the four sample buttons.

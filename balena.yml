@@ -1,0 +1,15 @@
+name: sequencer
+type: sw.application
+description: >-
+  A no frills R-pi sequencer
+assets:
+  repository:
+    type: blob.asset
+    data:
+      url: 'https://github.com/Teotsiv/balena-sequencer'
+data:
+  defaultDeviceType: raspberrypi3
+  supportedDeviceTypes:
+    - raspberrypi3
+    - raspberrypi4-64
+version: 1.0.0
